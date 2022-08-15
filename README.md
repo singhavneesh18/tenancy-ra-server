@@ -1,4 +1,5 @@
 # About App
+tenancy-ra-server here ra stands for 'rest api' <br>.
 
 This app provides db support for tenancy UI.
 It uses postgres DB <br>
