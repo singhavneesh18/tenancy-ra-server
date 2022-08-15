@@ -34,9 +34,21 @@ public class TenantController {
         return tenantService.getAllTenants();
     }
 
-    @PutMapping("/updateTenant/{tenantId}")
-    public TenantDto updateTenant(@RequestBody TenantDto inputTenant, @PathVariable Long tenantId) {
-        log.info("Request received for endpoint '/updateTenant/{}', Request Body: {} ", tenantId, inputTenant);
+    @PutMapping("/updateTenant")
+    public TenantDto updateTenant(@RequestBody TenantDto inputTenant) {
+        log.info("Request received for endpoint '/updateTenant', Request Body: {} ", inputTenant);
         return tenantService.updateTenantDetails(inputTenant);
+    }
+
+    @DeleteMapping("/deleteTenant/{tenantId}")
+    public void deleteTenant(@PathVariable Long tenantId) {
+        log.info("Request received for endpoint '/deleteTenant' Id : {}", tenantId);
+        tenantService.deleteTenant(tenantId);
+    }
+
+    @PostMapping("/createTenant")
+    public TenantDto createTenant(@RequestBody TenantDto inputTenant) {
+        log.info("Request received for endpoint '/createTenant', Request Body: {} ", inputTenant);
+        return tenantService.createTenant(inputTenant);
     }
 }

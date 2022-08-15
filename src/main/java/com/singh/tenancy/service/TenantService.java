@@ -10,4 +10,8 @@ public interface TenantService {
     List<TenantDto> getAllTenants();
 
     TenantDto updateTenantDetails(TenantDto inputDto);
+
+    void deleteTenant(Long tenantId);
+
+    TenantDto createTenant(TenantDto inputDto);
 }

@@ -21,5 +21,6 @@ public interface TenantResponseMapper {
     @InheritInverseConfiguration
     @Mapping(target = "createdTs", ignore = true)
     @Mapping(target = "updatedTs", ignore = true)
+    @Mapping(target = "id", ignore = true)
     TenantDetailsEntity dtoToTenantDetailsEntity(TenantDto tenantDto);
 }

@@ -5,6 +5,7 @@ import com.singh.tenancy.dto.TenantDto;
 import com.singh.tenancy.entity.TenantDetailsEntity;
 import com.singh.tenancy.mapper.TenantResponseMapper;
 import com.singh.tenancy.service.TenantService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class TenantServiceImpl implements TenantService {
 
@@ -29,7 +31,7 @@ public class TenantServiceImpl implements TenantService {
 
     @Override
     public List<TenantDto> getTenantDetailsByName(String tenantName) {
-        List<TenantDetailsEntity> detailsEntityList = tenantRepository.findByNameContaining(tenantName);
+        List<TenantDetailsEntity> detailsEntityList = tenantRepository.findByNameContainingIgnoreCase(tenantName);
         return tenantResponseMapper.entityToTenantDtoList(detailsEntityList);
     }
 
@@ -60,12 +62,24 @@ public class TenantServiceImpl implements TenantService {
             tenantDetailsEntity.setPanNumber(inputDto.getPanNumber());
             tenantDetailsEntity.setAadharNumber(inputDto.getAadharNumber());
             tenantDetailsEntity.setEmailId(inputDto.getEmailId());
-            TenantDetailsEntity savedEntity = null;//tenantRepository.save(tenantDetailsEntity);
+            TenantDetailsEntity savedEntity = tenantRepository.save(tenantDetailsEntity);
+            log.info("Updated successfully ..");
             return tenantResponseMapper.entityToTenantDto(savedEntity);
         } else {
             // throw an exception, not found unable to update
             return null;
         }
+    }
+
+    @Override
+    public void deleteTenant(Long tenantId) {
+        tenantRepository.deleteById(tenantId);//Handle EmptyResultDataAccessException
+    }
+
+    @Override
+    public TenantDto createTenant(TenantDto inputDto) {
+        TenantDetailsEntity tenantDetailsEntity = tenantRepository.save(tenantResponseMapper.dtoToTenantDetailsEntity(inputDto));
+        return tenantResponseMapper.entityToTenantDto(tenantDetailsEntity);
     }
 
 

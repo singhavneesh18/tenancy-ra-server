@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TenantRepository extends JpaRepository<TenantDetailsEntity, Long> {
-    List<TenantDetailsEntity> findByNameContaining(@NonNull String name);
+    List<TenantDetailsEntity> findByNameContainingIgnoreCase(@NonNull String name);
 }
