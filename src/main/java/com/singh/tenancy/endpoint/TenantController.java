@@ -1,23 +1,17 @@
 package com.singh.tenancy.endpoint;
 
-import com.singh.tenancy.dao.TenantRepository;
 import com.singh.tenancy.dto.TenantDto;
 import com.singh.tenancy.service.TenantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tenancy")
 @Slf4j
 public class TenantController {
-
-
-    @Autowired
-    private TenantRepository tenantRepository;
 
     @Autowired
     private TenantService tenantService;
@@ -29,14 +23,20 @@ public class TenantController {
     }
 
     @GetMapping("/getTenantByName/{tenantName}")
-    public TenantDto getTenantByName(@PathVariable String tenantName) {
+    public List<TenantDto> getTenantByName(@PathVariable String tenantName) {
         log.info("Request received for endpoint '/getTenantByName' Name : {}", tenantName);
         return tenantService.getTenantDetailsByName(tenantName);
     }
 
     @GetMapping("/getAllTenants")
-    public TenantDto getAllTenants() {
-        log.info("Received request: {}", tenantRepository.findAll());
-        return TenantDto.builder().name("New Tenant").build();
+    public List<TenantDto> getAllTenants() {
+        log.info("Request received for endpoint '/getAllTenants' ");
+        return tenantService.getAllTenants();
+    }
+
+    @PutMapping("/updateTenant/{tenantId}")
+    public TenantDto updateTenant(@RequestBody TenantDto inputTenant, @PathVariable Long tenantId) {
+        log.info("Request received for endpoint '/updateTenant/{}', Request Body: {} ", tenantId, inputTenant);
+        return tenantService.updateTenantDetails(inputTenant);
     }
 }

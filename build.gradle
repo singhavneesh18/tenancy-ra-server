@@ -23,11 +23,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "io.springfox:springfox-boot-starter:$spring_springfox_swagger_version"
     implementation "org.mapstruct:mapstruct:$mapstruct_version"
+    implementation "org.springframework.cloud:spring-cloud-starter-sleuth:$spring_cloud_sleuth"
 
     runtimeOnly 'org.postgresql:postgresql'
     compileOnly 'org.projectlombok:lombok'
-    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct_version"
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct_version"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
