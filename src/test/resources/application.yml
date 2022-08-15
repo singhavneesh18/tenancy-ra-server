@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dev_tenancy_db
+    driverClassName: org.postgresql.Driver
+    username: dev_tenancy_db_user
+    password: dev_tenancy_db_password

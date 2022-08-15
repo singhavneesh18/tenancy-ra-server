@@ -1,35 +1,25 @@
-create table IF NOT EXISTS tenant_details(
+create table IF NOT EXISTS "public".tenant_details(
     id serial primary key ,
     tenant_name varchar(255) not null,
     permanent_address varchar(255) not null,
-    start_date_of_renting timestamp not null,
+    start_date_of_renting timestamp default now(),
     end_date_of_renting timestamp,
     currently_renting boolean,
     pan_number varchar(50) unique,
     aadhar_number varchar(50) unique,
     email_id varchar(100) ,
-    created_ts timestamp,
+    created_ts timestamp  default now(),
     updated_ts  timestamp
 );
---ALTER table tenant_details ALTER COLUMN created_at SET DEFAULT now();
+
+
 insert into tenant_details (    aadhar_number,    currently_renting,    email_id,    pan_number,    permanent_address,    tenant_name)
 values (    '29040989167',     true,     'abc@gmail.com',      'DDFJHHGKGI',    'Abc Mahalla, JBD, 8032044',        'New Tenanat');
 
+insert into tenant_details (    aadhar_number,    currently_renting,    email_id,    pan_number,    permanent_address,    tenant_name)
+values (    '29040919167',     true,     'abc2@gmail.com',      'DKFJHHGKGI',    'New Chowk, JBD, 8032044',        'Avneesh');
 
-select
-    td.aadhar_number,
-    td.created_ts,
-    td.currently_renting,
-    td.email_id,
-    td.end_date_of_renting,
-    td."id",
-    td.pan_number,
-    td.permanent_address,
-    td.start_date_of_renting,
-    td.tenant_name,
-    td.updated_ts
-from
-    tenant_details td;
+select * from     tenant_details td;
 
 
 
