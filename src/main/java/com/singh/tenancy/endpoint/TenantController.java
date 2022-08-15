@@ -2,6 +2,7 @@ package com.singh.tenancy.endpoint;
 
 import com.singh.tenancy.dao.TenantRepository;
 import com.singh.tenancy.dto.TenantDto;
+import com.singh.tenancy.service.TenantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,16 +19,19 @@ public class TenantController {
     @Autowired
     private TenantRepository tenantRepository;
 
+    @Autowired
+    private TenantService tenantService;
+
     @GetMapping("/getTenantById/{tenantId}")
     public TenantDto getTenantById(@PathVariable Long tenantId) {
-        log.info("Received request: {}", tenantRepository.findById(tenantId));
-        return TenantDto.builder().name("New Tenant").build();
+        log.info("Request received for endpoint '/getTenantById' Id : {}", tenantId);
+        return tenantService.getTenantDetailsById(tenantId);
     }
 
     @GetMapping("/getTenantByName/{tenantName}")
     public TenantDto getTenantByName(@PathVariable String tenantName) {
-        log.info("Received request: {}", tenantRepository.findByName(tenantName));
-        return TenantDto.builder().name("New Tenant").build();
+        log.info("Request received for endpoint '/getTenantByName' Name : {}", tenantName);
+        return tenantService.getTenantDetailsByName(tenantName);
     }
 
     @GetMapping("/getAllTenants")

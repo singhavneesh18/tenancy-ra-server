@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -17,10 +18,10 @@ public class TenantDto {
     private Long id;
     private String name;
     private String permanentAddress;
-    private LocalDate startDateOfRent;
-    private LocalDate endDateOfRent;
-    private boolean isRenting;
-    private String photo;
-    private IdType idType;
-    private String attachedIdTypes;
+    private LocalDateTime startDateOfRenting;
+    private LocalDateTime endDateOfRenting;
+    private boolean currentlyRenting;
+    private String panNumber;
+    private String aadharNumber;
+    private String emailId;
 }
