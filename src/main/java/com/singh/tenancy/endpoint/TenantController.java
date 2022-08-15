@@ -4,6 +4,8 @@ import com.singh.tenancy.dto.TenantDto;
 import com.singh.tenancy.service.TenantService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,38 +19,39 @@ public class TenantController {
     private TenantService tenantService;
 
     @GetMapping("/getTenantById/{tenantId}")
-    public TenantDto getTenantById(@PathVariable Long tenantId) {
+    public ResponseEntity<TenantDto> getTenantById(@PathVariable Long tenantId) {
         log.info("Request received for endpoint '/getTenantById' Id : {}", tenantId);
-        return tenantService.getTenantDetailsById(tenantId);
+        return new ResponseEntity(tenantService.getTenantDetailsById(tenantId), HttpStatus.OK);
     }
 
     @GetMapping("/getTenantByName/{tenantName}")
-    public List<TenantDto> getTenantByName(@PathVariable String tenantName) {
+    public ResponseEntity<List<TenantDto>> getTenantByName(@PathVariable String tenantName) {
         log.info("Request received for endpoint '/getTenantByName' Name : {}", tenantName);
-        return tenantService.getTenantDetailsByName(tenantName);
+        return new ResponseEntity<>(tenantService.getTenantDetailsByName(tenantName), HttpStatus.OK);
     }
 
     @GetMapping("/getAllTenants")
-    public List<TenantDto> getAllTenants() {
+    public ResponseEntity<List<TenantDto>> getAllTenants() {
         log.info("Request received for endpoint '/getAllTenants' ");
-        return tenantService.getAllTenants();
+        return new ResponseEntity<>(tenantService.getAllTenants(), HttpStatus.OK);
     }
 
     @PutMapping("/updateTenant")
-    public TenantDto updateTenant(@RequestBody TenantDto inputTenant) {
+    public ResponseEntity<TenantDto> updateTenant(@RequestBody TenantDto inputTenant) {
         log.info("Request received for endpoint '/updateTenant', Request Body: {} ", inputTenant);
-        return tenantService.updateTenantDetails(inputTenant);
+        return new ResponseEntity<>(tenantService.updateTenantDetails(inputTenant), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteTenant/{tenantId}")
-    public void deleteTenant(@PathVariable Long tenantId) {
+    public ResponseEntity deleteTenant(@PathVariable Long tenantId) {
         log.info("Request received for endpoint '/deleteTenant' Id : {}", tenantId);
         tenantService.deleteTenant(tenantId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/createTenant")
-    public TenantDto createTenant(@RequestBody TenantDto inputTenant) {
+    public ResponseEntity<TenantDto> createTenant(@RequestBody TenantDto inputTenant) {
         log.info("Request received for endpoint '/createTenant', Request Body: {} ", inputTenant);
-        return tenantService.createTenant(inputTenant);
+        return new ResponseEntity<>(tenantService.createTenant(inputTenant), HttpStatus.CREATED);
     }
 }

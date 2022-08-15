@@ -3,6 +3,7 @@ package com.singh.tenancy.service.impl;
 import com.singh.tenancy.dao.TenantRepository;
 import com.singh.tenancy.dto.TenantDto;
 import com.singh.tenancy.entity.TenantDetailsEntity;
+import com.singh.tenancy.exception.NoDataFoundException;
 import com.singh.tenancy.mapper.TenantResponseMapper;
 import com.singh.tenancy.service.TenantService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class TenantServiceImpl implements TenantService {
 
     private TenantDto getTenantFromOptional(Optional<TenantDetailsEntity> tenantDetails) {
         if (tenantDetails.isEmpty()) {
-            return TenantDto.builder().build();//TODO return empty with 404 not found, Need to throw an Exception with code 404
+            throw new NoDataFoundException("No Tenat details found ");
         } else {
             return tenantResponseMapper.entityToTenantDto(tenantDetails.get());
         }
@@ -66,8 +67,7 @@ public class TenantServiceImpl implements TenantService {
             log.info("Updated successfully ..");
             return tenantResponseMapper.entityToTenantDto(savedEntity);
         } else {
-            // throw an exception, not found unable to update
-            return null;
+            throw new NoDataFoundException("No TenantDetails found with Id: " + inputDto.getId());
         }
     }
 

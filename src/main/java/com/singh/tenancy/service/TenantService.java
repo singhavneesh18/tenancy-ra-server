@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface TenantService {
     TenantDto getTenantDetailsById(Long tenantId);
+
     List<TenantDto> getTenantDetailsByName(String tenantName);
+
     List<TenantDto> getAllTenants();
 
     TenantDto updateTenantDetails(TenantDto inputDto);
